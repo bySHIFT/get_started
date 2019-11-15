@@ -14,7 +14,7 @@ int run_my_request()
     [](cicd& once_cicd) -> cicd& { return once_cicd; };
   cicd once_cicd("ce42bf7a");
 
-  auto result = my_cicd
+  const auto result = my_cicd
     .then([](cicd& commit) -> cicd& { return commit.cppcheck(); })
     .then([](cicd& commit) -> cicd& { return commit.build(); })
     .then([](cicd& commit) -> cicd& { return commit.ci(); })
