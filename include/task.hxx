@@ -26,7 +26,7 @@ public:
       /* ->task<typename std::result_of<Callable(ResultType)>::type(ArgTypes...)> */
   {
       return task<std::result_of_t<Callable(ResultType)>(ArgTypes...)>             \
-    ([this, &fn](ArgTypes&&... args) -> std::result_of<Callable(ResultType)>::type {
+    ([this, &fn](ArgTypes&&... args) -> std::result_of_t<Callable(ResultType)> {
       return fn(m_fnTask(std::forward<ArgTypes>(args)...)); });
   }
 
