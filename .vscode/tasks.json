@@ -1,0 +1,28 @@
+{
+// 有关 tasks.json 格式的文档，请参见
+  // https://go.microsoft.com/fwlink/?LinkId=733558
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "shell",
+      "label": "msvc2015 build",
+      "command": "cl.exe",
+      "args": [
+        "/Zi"
+        , "/EHsc"
+        , "/Fe:"
+        , "main.exe"
+        , "main.cpp"
+        , "src/entity/cicd.cpp"
+        , "src/theapp/my_request.cpp"
+      ],
+      "problemMatcher": [
+        "$msCompile"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    }
+  ]
+}
