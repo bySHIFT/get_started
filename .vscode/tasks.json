@@ -13,6 +13,8 @@
         , "/Fe:"
         , "main.exe"
         , "main.cpp"
+        , "src/utility/chrono.cpp"
+        , "src/utility/random.cpp"
         , "src/entity/cicd.cpp"
         , "src/theapp/my_request.cpp"
       ],

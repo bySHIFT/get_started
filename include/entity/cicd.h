@@ -30,8 +30,8 @@ public:
 
     friend std::ostream& operator<<(std::ostream& out, const job& jobs) noexcept
     {
-        out << ">> job name: " << jobs.get_stage_name(jobs.stage) << std::endl
-            << "stage: " << jobs.stage << std::endl << std::endl;
+        out << "  job name: " << jobs.get_stage_name(jobs.stage) << std::endl
+            << "  stage: " << jobs.stage << std::endl;
 
         return out;
     }

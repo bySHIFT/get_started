@@ -3,10 +3,11 @@
 #include <iostream>
 
 int main() noexcept try {
-  std::cout << ">> EXIT: " << zh::run_my_request()
+  const auto result_cicd = zh::run_my_request();
+  std::cout << ">> EXIT: " << result_cicd
     << std::endl;
 
-  return 0;
+  return result_cicd;
 } catch (...) {
   return -1;
 }

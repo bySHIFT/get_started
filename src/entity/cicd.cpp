@@ -1,9 +1,58 @@
 #include "../../include/entity/cicd.h"
+#include "../../include/utility/chrono.h"
+#include "../../include/utility/random.h"
 
+#include <future>
 #include <iostream>
+#include <thread>
 
 namespace zh
 {
+
+namespace internal
+{
+namespace cicd
+{
+int my_dummy_work()
+{
+  enum { ok = 0, error };
+
+  { // 输出本次操作的id
+    const auto uuid = utility::random::get_uuid();
+    std::cout << "  tag: " << uuid << std::endl;
+  }
+
+  { // 输出本次操作的时间戳
+    const auto now = utility::chrono::now();
+    std::cout << "  START: " << now << std::endl;
+  }
+
+  { // 处理本次操作
+    const auto dummy_elapsed = utility::random::get_uniform_distribution(3, 10);
+    auto _fut_work = std::async(std::launch::async
+      , [&dummy_elapsed]() {
+        std::cout << std::endl;
+        std::this_thread::sleep_for(std::chrono::seconds(dummy_elapsed));
+      }
+    );
+
+    while (_fut_work.wait_for(std::chrono::seconds(1)) \
+     == std::future_status::timeout) {
+      std::cout << "." << std::flush;
+    }
+
+    _fut_work.get();
+    std::cout << std::endl;
+  }
+
+  { // 返回本次操作状态
+  }
+
+  return ok;
+}
+
+} // end namespace internal
+} // end namespace internal
 
 std::string cicd::job::get_stage_name(int step) const noexcept
 {
@@ -47,8 +96,11 @@ cicd& cicd::run()
   // steps &= ~(1 << jobs.stage);
   steps |= jobs.stage;
 
-  std::cout << sha1 << std::endl;
-  std::cout << jobs;
+  std::cout << ">> commit sha1: " << sha1 << std::endl
+    << jobs;
+  if (internal::cicd::my_dummy_work()) {
+    steps &= ~jobs.stage;
+  }
 
   return *this;
 }
