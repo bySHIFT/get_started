@@ -22,12 +22,13 @@ public:
   }
 
   template<typename Callable>
-  auto then(Callable&& fn)                                                         \
-      /* ->task<typename std::result_of<Callable(ResultType)>::type(ArgTypes...)> */
+  auto then(Callable&& fn)                                             \
+/*  ->task<typename std::result_of<Callable(ResultType)>::type(ArgTypes...)> */
   {
-      return task<std::result_of_t<Callable(ResultType)>(ArgTypes...)>             \
-    ([this, &fn](ArgTypes&&... args) -> std::result_of_t<Callable(ResultType)> {
-      return fn(m_fnTask(std::forward<ArgTypes>(args)...)); });
+    return task<std::result_of_t<Callable(ResultType)>(ArgTypes...)>   \
+      ([this, &fn](ArgTypes&&... args)
+      -> std::result_of_t<Callable(ResultType)> // 这个后置类型推导必须要有
+      { return fn(m_fnTask(std::forward<ArgTypes>(args)...)); });
   }
 
 private:

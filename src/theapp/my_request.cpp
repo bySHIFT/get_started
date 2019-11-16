@@ -10,8 +10,9 @@ namespace zh
 
 int run_my_request()
 {
-  task <cicd&(cicd&)> my_cicd = \
-    [](cicd& once_cicd) -> cicd& { return once_cicd; };
+  #if 1
+  task<cicd&(cicd&)> my_cicd \
+    { [](cicd& once_cicd) -> cicd& { return once_cicd; } };
   cicd once_cicd("ce42bf7a");
 
   const auto result = my_cicd
@@ -28,6 +29,8 @@ int run_my_request()
     << std::endl << std::endl;
 
   return (steps == cicd::status::ALL ? 0 : 1);
+  #endif
+  return 0;
 }
 
 } // end namespace zh
