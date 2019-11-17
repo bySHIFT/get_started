@@ -11,3 +11,6 @@ jobs:
     - uses: actions/checkout@v1
     - name: make
       run: make
+      
+    - name: run
+      run: sh ./the3
