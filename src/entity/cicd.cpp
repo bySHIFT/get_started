@@ -8,11 +8,13 @@
 
 namespace zh
 {
-
 namespace internal
 {
 namespace cicd
 {
+namespace
+{
+
 int my_dummy_work()
 {
   enum { ok = 0, error };
@@ -29,29 +31,31 @@ int my_dummy_work()
 
   { // 处理本次操作
     const auto dummy_elapsed = utility::random::get_uniform_distribution(3, 10);
-    auto _fut_work = std::async(std::launch::async
+    auto fut_work = std::async(std::launch::async
       , [&dummy_elapsed]() {
         std::cout << std::endl;
         std::this_thread::sleep_for(std::chrono::seconds(dummy_elapsed));
+
+        return ok;
       }
     );
 
-    while (_fut_work.wait_for(std::chrono::seconds(1)) \
+    while (fut_work.wait_for(std::chrono::milliseconds(990)) \
      == std::future_status::timeout) {
       std::cout << "." << std::flush;
     }
 
-    _fut_work.get();
+    const auto result = fut_work.get();
     std::cout << std::endl;
+
+    return result;
   }
 
-  { // 返回本次操作状态
-  }
-
-  return ok;
+  return error;
 }
 
-} // end namespace internal
+} // end namespace unnamed
+} // end namespace cicd
 } // end namespace internal
 
 std::string cicd::job::get_stage_name(int step) const noexcept

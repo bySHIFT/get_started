@@ -18,7 +18,7 @@ std::string zh::utility::random::get_uuid()
   enum { UUID_SIZE = 64 };
   static char buffer[UUID_SIZE] { 0 };
   static const char* fmt_uuid = "%02X%02X%02X%02X-%02X%02X-%02X%02X-%02X%02X-%02X%02X%02X%02X%02X%02X";
-  
+
   auto fn_r = []() { return get_uniform_distribution(0, 0XFF); };
 
   std::memset(buffer, 0, sizeof buffer);
