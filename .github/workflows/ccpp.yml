@@ -13,4 +13,4 @@ jobs:
       run: make
       
     - name: run
-      run: sh ./the3
+      run: ./the3
