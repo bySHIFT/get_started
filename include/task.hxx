@@ -1,6 +1,7 @@
 ﻿#ifndef INCLUDE_TASK_HXX__
 #define INCLUDE_TASK_HXX__
 #include <functional>
+#include <type_traits>
 
 namespace zh
 {
@@ -27,7 +28,12 @@ public:
   {
     return task<std::result_of_t<Callable(ResultType)>(ArgTypes...)>   \
       ([this, &fn](ArgTypes&&... args)
-      -> std::result_of_t<Callable(ResultType)> // 这个后置类型推导必须要有
+// 这个后置类型推导必须要有
+#if 1
+      -> std::result_of_t<Callable(ResultType)>
+#else
+      -> std::result_of_t<std::decay_t<Callable>(std::decay_t<ResultType>)>
+#endif
       { return fn(m_fnTask(std::forward<ArgTypes>(args)...)); });
   }
 
