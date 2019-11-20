@@ -1,4 +1,4 @@
-name: THE3 CI
+name: C/C++ CI
 
 on: [push]
 
