@@ -15,8 +15,8 @@ std::string zh::utility::chrono::now()
   static std::once_flag init_TZ;
   std::call_once(init_TZ, []{
     // POSIX 限定：
-    // const std::string tz = "TZ=Asia/Shanghai";
-    const std::string tz = "TZ=UTC+8:00:00";
+    // std::string tz = "TZ=Asia/Shanghai";
+    std::string tz = "TZ=UTC+8:00:00";
     putenv(tz.data());
   });
 #endif
