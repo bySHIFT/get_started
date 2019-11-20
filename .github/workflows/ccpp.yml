@@ -3,8 +3,7 @@ name: THE3 CI
 on: [push]
 
 jobs:
-  build:
-
+  build_THE3:
     runs-on: ubuntu-latest
 
     steps:
@@ -12,8 +11,10 @@ jobs:
     - name: make
       run: make
 
-  run:
-    needs: build
+  run_THE3:
+    needs: build_THE3
+    runs-on: ubuntu-latest
+
     steps:
     - name: run
       run: |
