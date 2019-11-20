@@ -1,4 +1,4 @@
-name: C/C++ CI
+name: THE3 CI
 
 on: [push]
 
@@ -12,5 +12,10 @@ jobs:
     - name: make
       run: make
 
+  run:
+    needs: build
+    steps:
     - name: run
-      run: ./the3
+      run: |
+        echo '放胆开怀 尽情肆意'
+        ./the3
