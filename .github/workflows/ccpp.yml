@@ -1,10 +1,10 @@
-name: C/C++ CI
+name: THE3 CI
 
 on: [push]
 
 jobs:
   build:
-
+    name: build THE3
     runs-on: ubuntu-latest
 
     steps:
