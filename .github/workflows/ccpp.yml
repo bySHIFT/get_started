@@ -4,13 +4,16 @@ on: [push]
 
 jobs:
   build:
-    name: build THE3
+    name: build and run THE3
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v1
-    - name: make
+    - name: build
       run: make
 
     - name: run
-      run: ./the3
+      run: |
+        echo '放胆开怀 尽情肆意'
+        date -R
+        ./the3
