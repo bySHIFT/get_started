@@ -3,19 +3,15 @@ name: THE3 CI
 on: [push]
 
 jobs:
-  build_THE3:
+  build:
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v1
+
     - name: make
       run: make
 
-  run_THE3:
-    needs: build_THE3
-    runs-on: ubuntu-latest
-
-    steps:
     - name: run
       run: |
         echo '放胆开怀 尽情肆意'
