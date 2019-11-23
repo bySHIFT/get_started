@@ -27,35 +27,38 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\main.cpp" />
-    <ClCompile Include="..\..\..\src\entity\cicd.cpp">
-      <Filter>src\entity</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\theapp\my_request.cpp">
-      <Filter>src\theapp</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\utility\chrono.cpp">
-      <Filter>src\utility</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\utility\random.cpp">
-      <Filter>src\utility</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\..\include\task.hxx">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\entity\cicd.h">
+    <ClInclude Include="..\..\include\entity\cicd.h">
       <Filter>include\entity</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\theapp\my_request.h">
+    <ClInclude Include="..\..\include\theapp\my_request.h">
       <Filter>include\theapp</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\utility\chrono.h">
+    <ClInclude Include="..\..\include\utility\chrono.h">
       <Filter>include\utility</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\utility\random.h">
+    <ClInclude Include="..\..\include\utility\random.h">
       <Filter>include\utility</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\task.hxx">
+      <Filter>include</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\entity\cicd.cpp">
+      <Filter>src\entity</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\theapp\my_request.cpp">
+      <Filter>src\theapp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\utility\chrono.cpp">
+      <Filter>src\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\utility\random.cpp">
+      <Filter>src\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Makefile" />
   </ItemGroup>
 </Project>

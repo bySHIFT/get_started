@@ -123,18 +123,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\main.cpp" />
-    <ClCompile Include="..\..\..\src\entity\cicd.cpp" />
-    <ClCompile Include="..\..\..\src\theapp\my_request.cpp" />
-    <ClCompile Include="..\..\..\src\utility\chrono.cpp" />
-    <ClCompile Include="..\..\..\src\utility\random.cpp" />
+    <ClInclude Include="..\..\include\entity\cicd.h" />
+    <ClInclude Include="..\..\include\task.hxx" />
+    <ClInclude Include="..\..\include\theapp\my_request.h" />
+    <ClInclude Include="..\..\include\utility\chrono.h" />
+    <ClInclude Include="..\..\include\utility\random.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\include\entity\cicd.h" />
-    <ClInclude Include="..\..\..\include\task.hxx" />
-    <ClInclude Include="..\..\..\include\theapp\my_request.h" />
-    <ClInclude Include="..\..\..\include\utility\chrono.h" />
-    <ClInclude Include="..\..\..\include\utility\random.h" />
+    <ClCompile Include="..\..\main.cpp" />
+    <ClCompile Include="..\..\src\entity\cicd.cpp" />
+    <ClCompile Include="..\..\src\theapp\my_request.cpp" />
+    <ClCompile Include="..\..\src\utility\chrono.cpp" />
+    <ClCompile Include="..\..\src\utility\random.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Makefile" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
