@@ -83,6 +83,7 @@ cicd::operator bool() const noexcept
   return (over == steps);
 }
 
+#pragma warning(disable: 26812)
 #define RUN_NEXT_JOB(step)    \
   jobs = job { step };        \
   if (!(*this)) return *this; \
@@ -94,6 +95,7 @@ cicd& cicd::ci() { RUN_NEXT_JOB(status::CI); }
 cicd& cicd::cd() { RUN_NEXT_JOB(status::CD); }
 cicd& cicd::clean() { RUN_NEXT_JOB(status::CLEAN); }
 #undef RUN_NEXT_JOB
+#pragma warning(default: 26812)
 
 cicd& cicd::run()
 {
