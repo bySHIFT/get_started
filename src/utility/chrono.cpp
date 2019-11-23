@@ -18,7 +18,9 @@ std::string zh::utility::chrono::now()
   std::strftime(buffer
     , sizeof buffer
     , fmt_now
+#pragma warning(disable: 4996)
     , std::localtime(&t_now)
+#pragma warning(default: 4996)
   );
 
   return buffer;

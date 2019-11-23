@@ -32,15 +32,15 @@ int my_dummy_work()
   { // 处理本次操作
     const auto dummy_elapsed = utility::random::get_uniform_distribution(3, 10);
     auto fut_work = std::async(std::launch::async
-      , [&dummy_elapsed]() {
+      , [&dummy_elapsed]() ->int {
         std::cout << std::endl;
-        std::this_thread::sleep_for(std::chrono::seconds(dummy_elapsed));
+        std::this_thread::sleep_for(std::chrono::seconds(dummy_elapsed + 1));
 
         return ok;
       }
     );
 
-    while (fut_work.wait_for(std::chrono::milliseconds(990)) \
+    while (fut_work.wait_for(std::chrono::seconds(1)) \
      == std::future_status::timeout) {
       std::cout << "." << std::flush;
     }
