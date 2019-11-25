@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{3326d13c-ba4e-4ad5-9a07-cb2b6cbc0aa7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{2e34bf50-24b6-46f6-b02a-d03c2754a9b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\entity">
+      <UniqueIdentifier>{827f5148-9518-49aa-9633-984f2edd4073}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\utility">
+      <UniqueIdentifier>{51e8f56a-37ac-4148-b6ba-fa83b32448a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\theapp">
+      <UniqueIdentifier>{a4f12eab-82e3-48f5-af1a-57efbdb8fa0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\entity">
+      <UniqueIdentifier>{7e4ead38-74ce-4491-a784-f7820677b220}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\utility">
+      <UniqueIdentifier>{f4cc2a12-ef87-4112-beeb-b36ed5efbf0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\theapp">
+      <UniqueIdentifier>{c9aec488-a31a-4ea3-a331-6126de2d5be6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\include\entity\cicd.h">
+      <Filter>include\entity</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\theapp\my_request.h">
+      <Filter>include\theapp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\utility\chrono.h">
+      <Filter>include\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\utility\random.h">
+      <Filter>include\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\task.hxx">
+      <Filter>include</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\entity\cicd.cpp">
+      <Filter>src\entity</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\theapp\my_request.cpp">
+      <Filter>src\theapp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\utility\chrono.cpp">
+      <Filter>src\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\utility\random.cpp">
+      <Filter>src\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Makefile" />
+  </ItemGroup>
+</Project>

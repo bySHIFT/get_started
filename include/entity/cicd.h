@@ -8,7 +8,7 @@ namespace zh
 class cicd
 {
 public:
-  enum status
+  enum status : int
   {
     ERROR_S     = -1
     , OK_S      = 0
@@ -50,8 +50,8 @@ public:
   int get_steps() const noexcept { return steps; }
 
 private:
-  const std::string sha1;
-  job jobs;
+  const std::string sha1{};
+  job jobs{};
   int steps { status::OK_S };
 
   cicd& run();

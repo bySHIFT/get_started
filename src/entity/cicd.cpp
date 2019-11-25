@@ -32,15 +32,15 @@ int my_dummy_work()
   { // 处理本次操作
     const auto dummy_elapsed = utility::random::get_uniform_distribution(3, 10);
     auto fut_work = std::async(std::launch::async
-      , [&dummy_elapsed]() {
+      , [&dummy_elapsed]() ->int {
         std::cout << std::endl;
-        std::this_thread::sleep_for(std::chrono::seconds(dummy_elapsed));
+        std::this_thread::sleep_for(std::chrono::seconds(dummy_elapsed + 1));
 
         return ok;
       }
     );
 
-    while (fut_work.wait_for(std::chrono::milliseconds(990)) \
+    while (fut_work.wait_for(std::chrono::seconds(1)) \
      == std::future_status::timeout) {
       std::cout << "." << std::flush;
     }
@@ -83,6 +83,7 @@ cicd::operator bool() const noexcept
   return (over == steps);
 }
 
+#pragma warning(disable: 26812)
 #define RUN_NEXT_JOB(step)    \
   jobs = job { step };        \
   if (!(*this)) return *this; \
@@ -94,6 +95,7 @@ cicd& cicd::ci() { RUN_NEXT_JOB(status::CI); }
 cicd& cicd::cd() { RUN_NEXT_JOB(status::CD); }
 cicd& cicd::clean() { RUN_NEXT_JOB(status::CLEAN); }
 #undef RUN_NEXT_JOB
+#pragma warning(default: 26812)
 
 cicd& cicd::run()
 {
