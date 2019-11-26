@@ -3,9 +3,6 @@
 
 namespace messaging
 {
-class close_queue
-{};
-
 class dispatcher
 {
 private:
@@ -22,13 +19,11 @@ public:
 
   template<typename Message,typename Func>
   TemplateDispatcher<dispatcher,Message,Func>
-  handle(Func&& f)
-  {
+  handle(Func&& f) {
     return TemplateDispatcher<dispatcher,Message,Func>(q,this,std::forward<Func>(f));
   }
 
-  ~dispatcher() noexcept(false)
-  {
+  ~dispatcher() noexcept(false) {
     if(!chained) wait_and_dispatch();
   }
 
@@ -39,21 +34,15 @@ private:
   dispatcher(const dispatcher&) = delete;
   dispatcher& operator=(const dispatcher&) = delete;
 
-  void wait_and_dispatch()
-  {
-    for (;;)
-    {
+  void wait_and_dispatch() {
+    while (true) {
       auto msg = q->wait_and_pop();
       dispatch(msg);
     }
   }
 
-  bool dispatch(const std::shared_ptr<message_base>& msg)
-  {
-    if (dynamic_cast<wrapped_message<close_queue>*>(msg.get()))
-    {
-      throw close_queue();
-    }
+  bool dispatch(const std::shared_ptr<message_base>& msg) {
+    if (dynamic_cast<wrapped_message<close_queue>*>(msg.get())) throw close_queue();
 
     return false;
   }

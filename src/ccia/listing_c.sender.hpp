@@ -6,12 +6,10 @@ namespace messaging
 class sender
 {
 public:
-  sender() : q(nullptr) {}
-  explicit sender(queue* q_) : q(q_) {}
+  explicit sender(queue* q_ = nullptr) : q(q_) {}
 
   template<typename Message>
-  void send(const Message& msg)
-  {
+  void send(const Message& msg) {
     if (q) q->push(msg);
   }
 

@@ -12,11 +12,9 @@ int main()
   std::thread atm_thread(&atm::run, &machine);
   messaging::sender atmqueue(machine.get_sender());
   bool quit_pressed { false };
-  while (!quit_pressed)
-  {
+  while (!quit_pressed) {
     char c = getchar();
-    switch(c)
-    {
+    switch(c) {
     case '0':
     case '1':
     case '2':

@@ -7,13 +7,11 @@ namespace messaging
 class receiver
 {
 public:
-  operator sender()
-  {
+  explicit operator sender() {
     return sender(&q);
   }
 
-  dispatcher wait()
-  {
+  dispatcher wait() {
     return dispatcher(&q);
   }
 
