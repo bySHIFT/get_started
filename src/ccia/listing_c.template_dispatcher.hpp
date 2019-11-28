@@ -3,7 +3,7 @@
 
 namespace messaging
 {
-template<typename PreviousDispatcher, typename Msg, typename Func>
+template<typename PreviousDispatcher, typename Message, typename Func>
 class TemplateDispatcher
 {
 private:
@@ -11,37 +11,29 @@ private:
   friend class TemplateDispatcher;
 
 public:
+  TemplateDispatcher(PreviousDispatcher* prev_, queue* q_, Func&& f_)
+    : prev(prev_), q(q_), f(std::forward<Func>(f_)), chained(false)
+  { prev_->chained = true; }
   TemplateDispatcher(TemplateDispatcher&& other)
-    : q(other.q)
-    , prev(other.prev)
+    : prev(other.prev)
+    , q(other.q)
     , f(std::move(other.f))
     , chained(other.chained)
   { other.chained = true; }
 
-  TemplateDispatcher(queue* q_, PreviousDispatcher* prev_, Func&& f_)
-    : q(q_), prev(prev_), f(std::forward<Func>(f_)), chained(false)
-  { prev_->chained = true; }
-
-  template<typename OtherMsg, typename OtherFunc>
-  TemplateDispatcher<TemplateDispatcher, OtherMsg, OtherFunc>
-  handle(OtherFunc&& of) {
-    return TemplateDispatcher<TemplateDispatcher, OtherMsg, OtherFunc> \
-      (q, this, std::forward<OtherFunc>(of));
-  }
-
-  ~TemplateDispatcher() noexcept(false) {
-    if(!chained) wait_and_dispatch();
-  }
-
-private:
-  queue* q { nullptr };
-  PreviousDispatcher* prev { nullptr };
-  Func f;
-  bool chained { false };
+  ~TemplateDispatcher() noexcept(false) { if (!chained) wait_and_dispatch(); }
 
   TemplateDispatcher(const TemplateDispatcher&) = delete;
   TemplateDispatcher& operator=(const TemplateDispatcher&) = delete;
 
+  template<typename OtherMsg, typename OtherFunc>
+  auto // TemplateDispatcher<TemplateDispatcher, OtherMsg, OtherFunc>
+  handle(OtherFunc&& of) {
+    return TemplateDispatcher<TemplateDispatcher, OtherMsg, OtherFunc>\
+      (this, q, std::forward<OtherFunc>(of));
+  }
+
+private:
   void wait_and_dispatch() {
     while (true) {
       auto msg = q->wait_and_pop();
@@ -49,13 +41,18 @@ private:
     }
   }
 
-  bool dispatch(const std::shared_ptr<message_base>& msg) {
-    if (wrapped_message<Msg>* wrapper = dynamic_cast<wrapped_message<Msg>*>(msg.get())) {
+  bool dispatch(const message_base_shared& msg) {
+    if (auto* wrapper = dynamic_cast<wrapped_message<Message>*>(msg.get())) {
       f(wrapper->contents);
       return true;
     } else {
       return prev->dispatch(msg);
     }
   }
+
+  queue*              q { nullptr };
+  PreviousDispatcher* prev { nullptr };
+  Func                f {};
+  bool                chained { false };
 };
 } // end namespace messaging

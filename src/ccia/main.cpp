@@ -51,4 +51,6 @@ int main()
   atm_thread.join();
   bank_thread.join();
   if_thread.join();
+
+  return 0;
 }

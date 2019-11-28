@@ -12,9 +12,10 @@ public:
     : bank(bank_)
     , interface_hardware(interface_hardware_) {}
 
-  void done() {
-    get_sender().send(messaging::close_queue());
-  }
+  atm(const atm&) = delete;
+  atm& operator=(const atm&) = delete;
+
+  void done() { get_sender().send(messaging::close_queue()); }
 
   void run() try {
     state = &atm::waiting_for_card;
@@ -22,19 +23,9 @@ public:
     while (true) (this->*state)();
   } catch(const messaging::close_queue&) {}
 
-  messaging::sender get_sender() {
-    return (messaging::sender)incoming;
-  }
+  messaging::sender get_sender() { return (messaging::sender)incoming; }
 
 private:
-  messaging::receiver incoming;
-  messaging::sender bank;
-  messaging::sender interface_hardware;
-  void (atm::*state)();
-  std::string account;
-  unsigned withdrawal_amount;
-  std::string pin;
-
   void process_withdrawal() {
     incoming.wait()
     .handle<withdraw_ok>([&](const withdraw_ok& msg) {
@@ -87,7 +78,7 @@ private:
   void getting_pin() {
     incoming.wait()
     .handle<digit_pressed>([&](const digit_pressed& msg) {
-      unsigned const pin_length = 4;
+      const auto pin_length = 4U;
       pin += msg.digit;
       if (pin.length() == pin_length) {
           bank.send(verify_pin(account, pin, (messaging::sender)incoming));
@@ -114,6 +105,11 @@ private:
     state = &atm::waiting_for_card;
   }
 
-  atm(const atm&) = delete;
-  atm& operator=(const atm&) = delete;
+  messaging::receiver incoming {};
+  messaging::sender   bank {};
+  messaging::sender   interface_hardware {};
+  std::string         account {};
+  unsigned            withdrawal_amount {};
+  std::string         pin {};
+  void (atm::*state)() {};
 };

@@ -11,6 +11,8 @@ struct message_base
   virtual ~message_base() {}
 };
 
+using message_base_shared = std::shared_ptr<message_base>;
+
 template<typename Msg>
 struct wrapped_message : message_base {
   Msg contents;
@@ -27,7 +29,7 @@ public:
     c.notify_all();
   }
 
-  std::shared_ptr<message_base> wait_and_pop() {
+  message_base_shared wait_and_pop() {
     std::unique_lock<std::mutex> lk(m);
     c.wait(lk, [&] { return !q.empty(); });
     auto res = q.front();
@@ -39,7 +41,7 @@ public:
 private:
   std::mutex m;
   std::condition_variable c;
-  std::queue<std::shared_ptr<message_base>> q;
+  std::queue<message_base_shared> q;
 };
 
 class close_queue{};
