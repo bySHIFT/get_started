@@ -8,8 +8,8 @@ class sender
 public:
   explicit sender(queue* q_ = nullptr) : q(q_) {}
 
-  template<typename Message>
-  void send(const Message& msg) { if (q) q->push(msg); }
+  template<typename T>
+  void send(const T& msg) { if (q) q->push(msg); }
 
 private:
   queue* q { nullptr };

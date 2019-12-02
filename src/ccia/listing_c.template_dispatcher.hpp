@@ -6,10 +6,6 @@ namespace messaging
 template<typename PreviousDispatcher, typename Message, typename Func>
 class TemplateDispatcher
 {
-private:
-  template<typename Dispatcher, typename OtherMsg, typename OtherFunc>
-  friend class TemplateDispatcher;
-
 public:
   TemplateDispatcher(PreviousDispatcher* prev_, queue* q_, Func&& f_)
     : prev(prev_), q(q_), f(std::forward<Func>(f_)), chained(false)
@@ -30,19 +26,20 @@ public:
   auto // TemplateDispatcher<TemplateDispatcher, OtherMsg, OtherFunc>
   handle(OtherFunc&& of) {
     return TemplateDispatcher<TemplateDispatcher, OtherMsg, OtherFunc>\
-      (this, q, std::forward<OtherFunc>(of));
+    { this, q, std::forward<OtherFunc>(of) };
   }
 
 private:
+  template<typename Dispatcher, typename OtherMsg, typename OtherFunc>
+  friend class TemplateDispatcher;
+
   void wait_and_dispatch() {
-    while (true) {
-      auto msg = q->wait_and_pop();
-      if (dispatch(msg)) break;
-    }
+    while (true) { if (dispatch(q->wait_and_pop())) break; }
   }
 
-  bool dispatch(const message_base_shared& msg) {
-    if (auto* wrapper = dynamic_cast<wrapped_message<Message>*>(msg.get())) {
+  bool dispatch(const message_shared& msg) {
+    if (auto wrapper =\
+      std::dynamic_pointer_cast<wrapped_message<Message>>(msg)) {
       f(wrapper->contents);
       return true;
     } else {

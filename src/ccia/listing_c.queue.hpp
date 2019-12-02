@@ -6,17 +6,17 @@
 
 namespace messaging
 {
-struct message_base
+struct message
 {
-  virtual ~message_base() {}
+  virtual ~message() {}
 };
 
-using message_base_shared = std::shared_ptr<message_base>;
+using message_shared = std::shared_ptr<message>;
 
-template<typename Msg>
-struct wrapped_message : message_base {
-  Msg contents;
-  explicit wrapped_message(const Msg& contents_) : contents(contents_) {}
+template<typename T>
+struct wrapped_message : public message {
+    T contents;
+  explicit wrapped_message(const T& contents_) : contents(contents_) {}
 };
 
 class queue
@@ -29,7 +29,7 @@ public:
     c.notify_all();
   }
 
-  message_base_shared wait_and_pop() {
+  message_shared wait_and_pop() {
     std::unique_lock<std::mutex> lk(m);
     c.wait(lk, [&] { return !q.empty(); });
     auto res = q.front();
@@ -41,7 +41,7 @@ public:
 private:
   std::mutex m;
   std::condition_variable c;
-  std::queue<message_base_shared> q;
+  std::queue<message_shared> q;
 };
 
 class close_queue{};
