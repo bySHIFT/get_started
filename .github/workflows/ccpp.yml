@@ -15,5 +15,6 @@ jobs:
     - name: run
       run: |
         echo '放胆开怀 尽情肆意'
-        date -R
+        TZ='Asia/Shanghai'; export TZ
+        date +'%F %T %::z'
         ./the3
