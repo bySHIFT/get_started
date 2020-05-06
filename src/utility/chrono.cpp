@@ -1,4 +1,4 @@
-﻿#include "../../include/utility/chrono.h"
+﻿#include "include/utility/chrono.h"
 
 #include <chrono>
 #include <cstdio>
@@ -9,8 +9,8 @@
 std::string zh::utility::chrono::now()
 {
   enum { NOW_SIZE = 64 };
-  static char buffer[NOW_SIZE] { 0 };
-  static const char* fmt_now = "%F %T %z";
+  char buffer[NOW_SIZE] { 0 };
+  const char* fmt_now = "%F %T %z";
 
   std::memset(buffer, 0, sizeof buffer);
   const auto t_now = std::chrono::system_clock::to_time_t( \

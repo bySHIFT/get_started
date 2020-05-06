@@ -1,5 +1,4 @@
-﻿#ifndef INCLUDE_TASK_HXX__
-#define INCLUDE_TASK_HXX__
+﻿#pragma once
 #include <functional>
 #include <type_traits>
 
@@ -42,4 +41,3 @@ private:
 };
 } // end namespace zh
 
-#endif // INCLUDE_TASK_HXX__

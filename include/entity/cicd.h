@@ -1,5 +1,4 @@
-#ifndef INCLUDE_CICD_H__
-#define INCLUDE_CICD_H__
+#pragma once
 #include <ostream>
 #include <string>
 
@@ -58,5 +57,3 @@ private:
 };
 
 } // end namespace zh
-
-#endif // INCLUDE_CICD_H__

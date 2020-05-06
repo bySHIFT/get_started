@@ -1,7 +1,7 @@
-#include "../../include/theapp/my_request.h"
+#include "include/theapp/my_request.h"
 
-#include "../../include/entity/cicd.h"
-#include "../../include/task.hxx"
+#include "include/entity/cicd.h"
+#include "include/task.hxx"
 
 #include <iostream>
 

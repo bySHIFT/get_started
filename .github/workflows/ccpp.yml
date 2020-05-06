@@ -1,20 +1,20 @@
-name: THE3 CI
+name: MAKING CI
 
 on: [push]
 
 jobs:
   build:
-    name: build and run THE3
+    name: 构建及运行 MAKING
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v1
-    - name: build
-      run: make
+    - name: 构建
+      run: cmake -H. -Bbuild && cmake --build ./build
 
-    - name: run
+    - name: 运行
       run: |
         echo '放胆开怀 尽情肆意'
         TZ='Asia/Shanghai'; export TZ
         date +'%F %T %::z'
-        ./the3
+        ./build/making

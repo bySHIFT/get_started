@@ -1,5 +1,6 @@
 #include "include/theapp/my_request.h"
 
+#include <cstdlib>
 #include <iostream>
 
 int main() noexcept try {
@@ -9,5 +10,5 @@ int main() noexcept try {
 
   return result_cicd;
 } catch (...) {
-  return -1;
+  return EXIT_FAILURE;
 }

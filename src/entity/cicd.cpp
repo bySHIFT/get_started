@@ -1,6 +1,6 @@
-#include "../../include/entity/cicd.h"
-#include "../../include/utility/chrono.h"
-#include "../../include/utility/random.h"
+#include "include/entity/cicd.h"
+#include "include/utility/chrono.h"
+#include "include/utility/random.h"
 
 #include <future>
 #include <iostream>

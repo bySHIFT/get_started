@@ -1,4 +1,4 @@
-﻿#include "../../include/utility/random.h"
+﻿#include "include/utility/random.h"
 
 #include <cstdio>
 #include <cstring>
@@ -16,8 +16,8 @@ int zh::utility::random::get_uniform_distribution(int min, int max)
 std::string zh::utility::random::get_uuid()
 { // 744B6B77-EB60-43C7-951B-3C5AF951E4B0
   enum { UUID_SIZE = 64 };
-  static char buffer[UUID_SIZE] { 0 };
-  static const char* fmt_uuid = "%02X%02X%02X%02X-%02X%02X-%02X%02X-%02X%02X-%02X%02X%02X%02X%02X%02X";
+  char buffer[UUID_SIZE] { 0 };
+  const char* fmt_uuid = "%02X%02X%02X%02X-%02X%02X-%02X%02X-%02X%02X-%02X%02X%02X%02X%02X%02X";
 
   auto fn_r = []() { return get_uniform_distribution(0, 0XFF); };
 

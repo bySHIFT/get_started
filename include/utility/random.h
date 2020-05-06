@@ -1,5 +1,4 @@
-#ifndef INCLUDE_UTILITY_RANDOM_H__
-#define INCLUDE_UTILITY_RANDOM_H__
+#pragma once
 #include <string>
 
 namespace zh
@@ -14,5 +13,3 @@ std::string get_uuid();
 } // end namespace random
 } // end namespace utility
 } // end namespace zh
-
-#endif // INCLUDE_UTILITY_RANDOM_H__
