@@ -1,42 +1,45 @@
 # get_started
  less is more
 
+## ubuntu
+$ cmake -H. -Bbuild && cmake --build ./build && ./build/making
+
 ```
 >> commit sha1: ce42bf7a
   job name: cppcheck
   stage: 1
-  tag: 5579FADE-0AFF-9B8F-7C14-024DDA9A13D5
-  START: 2019-11-17 11:58:54
+  tag: 19E74F7F-CA03-C380-1923-EEAA5D29A444
+  START: 2020-05-06 23:54:09 +0800
 
-.....
+........
 >> commit sha1: ce42bf7a
   job name: build
   stage: 2
-  tag: 823CD5C0-5871-7B51-F8AD-AB0C51C5B33A
-  START: 2019-11-17 11:58:59
+  tag: 0441F133-6424-43E6-7338-07022D4DCF0F
+  START: 2020-05-06 23:54:18 +0800
 
-.........
+......
 >> commit sha1: ce42bf7a
   job name: ci
   stage: 4
-  tag: BE87D7CA-48F5-1384-2536-DAEAA31A3EF6
-  START: 2019-11-17 11:59:08
-
-..........
->> commit sha1: ce42bf7a
-  job name: cd
-  stage: 8
-  tag: 2CD721F9-54B9-0D89-ED3E-7E49A954055D
-  START: 2019-11-17 11:59:18
+  tag: 796E8F7C-A796-B189-A4B2-99FF3CBA9504
+  START: 2020-05-06 23:54:25 +0800
 
 .......
 >> commit sha1: ce42bf7a
+  job name: cd
+  stage: 8
+  tag: BDD8F109-4804-9FDF-8C14-881B6A00F349
+  START: 2020-05-06 23:54:33 +0800
+
+.........
+>> commit sha1: ce42bf7a
   job name: clean
   stage: 16
-  tag: 5B941175-AAC2-1AFB-4EFB-C80B5012CB10
-  START: 2019-11-17 11:59:25
+  tag: 24DA8701-CF33-E866-6F9B-F6F9CB27D9F5
+  START: 2020-05-06 23:54:43 +0800
 
-....
+......
 
 >> STATUS: DONE
 

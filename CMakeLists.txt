@@ -9,8 +9,6 @@ include_directories(./)
 
 # 配置资源文件列表
 list(APPEND _source
-  ./include/utility/chrono.h
-  ./include/utility/random.h
   ./include/entity/cicd.h
   ./include/task.hxx
   ./include/theapp/my_request.h
