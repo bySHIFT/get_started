@@ -23,4 +23,11 @@ list(APPEND _source
   ./src/utility/random.cpp
 )
 
+if (NOT WIN32)
+  # 设置编译选项
+  # 允许O3优化、多线程
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -pthread")
+  message(STATUS "C++ compiler flags: ${CMAKE_CXX_FLAGS}")
+endif (NOT WIN32)
+
 add_executable(making main.cpp ${_source})
