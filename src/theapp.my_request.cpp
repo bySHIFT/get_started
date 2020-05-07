@@ -1,8 +1,9 @@
-#include "include/theapp/my_request.h"
+#include "include/theapp.my_request.h"
 
-#include "include/entity/cicd.h"
+#include "include/entity.cicd.h"
 #include "include/task.hxx"
 
+#include <cstdlib>
 #include <iostream>
 
 namespace zh
@@ -10,9 +11,10 @@ namespace zh
 
 int run_my_request()
 {
-  task<cicd&(cicd&)> my_cicd \
-    { [](cicd& once_cicd) -> cicd& { return once_cicd; } };
   cicd once_cicd("ce42bf7a");
+  task<cicd&(cicd&)> my_cicd{
+    [](cicd& once_cicd) -> cicd& { return once_cicd; }
+  };
 
   const auto result = my_cicd
     .then([](cicd& commit) -> cicd& { return commit.cppcheck(); })
@@ -27,7 +29,7 @@ int run_my_request()
     << ">> STATUS: " << (steps == cicd::status::ALL ? "DONE" : "ERROR")
     << std::endl << std::endl;
 
-  return (steps == cicd::status::ALL ? 0 : 1);
+  return (steps == cicd::status::ALL ? EXIT_SUCCESS : EXIT_FAILURE);
 }
 
 } // end namespace zh

@@ -9,16 +9,16 @@ include_directories(./)
 
 # 配置资源文件列表
 list(APPEND _source
-  ./include/entity/cicd.h
+  ./include/entity.cicd.h
   ./include/task.hxx
-  ./include/theapp/my_request.h
-  ./include/utility/chrono.h
-  ./include/utility/random.h
+  ./include/theapp.my_request.h
+  ./include/utility.chrono.h
+  ./include/utility.random.h
 
-  ./src/entity/cicd.cpp
-  ./src/theapp/my_request.cpp
-  ./src/utility/chrono.cpp
-  ./src/utility/random.cpp
+  ./src/entity.cicd.cpp
+  ./src/theapp.my_request.cpp
+  ./src/utility.chrono.cpp
+  ./src/utility.random.cpp
 )
 
 if (NOT WIN32)
