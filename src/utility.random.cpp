@@ -1,4 +1,4 @@
-﻿#include "include/utility.random.h"
+#include "include/utility.random.h"
 
 #include <cstdio>
 #include <cstring>

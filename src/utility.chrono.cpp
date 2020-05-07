@@ -1,4 +1,4 @@
-﻿#include "include/utility.chrono.h"
+#include "include/utility.chrono.h"
 
 #include <chrono>
 #include <cstdio>
@@ -27,7 +27,7 @@ std::string zh::utility::chrono::now(const char* format) try {
       break;
 
     const auto tp_now = std::chrono::system_clock::now();
-    const auto t_now = std::chrono::system_clock::to_time_t(tp_now);
+    const auto tt_now = std::chrono::system_clock::to_time_t(tp_now);
     const auto us \
       = duration_cast<microseconds>(tp_now.time_since_epoch()).count()
         % microseconds_in_sec;
@@ -35,10 +35,10 @@ std::string zh::utility::chrono::now(const char* format) try {
     struct tm* ptr_tm_now{ nullptr };
 #ifdef _WIN32
     struct tm tm_now = { 0 };
-    localtime_s(&tm_now, &t_now);
+    localtime_s(&tm_now, &tt_now);
     ptr_tm_now = &tm_now;
 #else
-    ptr_tm_now = std::localtime(&t_now);
+    ptr_tm_now = std::localtime(&tt_now);
 #endif
 
     for (const auto& type : std::vector<const char*>{ "%F", "%T", "%z"}) {
