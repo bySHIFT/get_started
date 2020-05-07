@@ -6,6 +6,7 @@
 #include <ctime>
 #include <mutex>
 
+// 2020-05-07 14:05:37 +0800
 std::string zh::utility::chrono::now() try {
   enum { NOW_SIZE = 64 };
   char buffer[NOW_SIZE] { 0 };
@@ -15,17 +16,19 @@ std::string zh::utility::chrono::now() try {
   const auto t_now = std::chrono::system_clock::to_time_t( \
     std::chrono::system_clock::now());
 
-  struct tm tm_now = { 0 };
+  struct tm* ptr_tm_now{ nullptr };
 #ifdef _WIN32
+  struct tm tm_now = { 0 };
   localtime_s(&tm_now, &t_now);
+  ptr_tm_now = &tm_now;
 #else
-  tm_now = *std::localtime(&t_now);
+  ptr_tm_now = std::localtime(&t_now);
 #endif
 
   std::strftime(buffer
     , sizeof buffer
     , fmt_now
-    , &tm_now
+    , ptr_tm_now
   );
 
   return buffer;
