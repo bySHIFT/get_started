@@ -13,12 +13,17 @@ list(APPEND _source
   ./include/task.hxx
   ./include/theapp.my_request.h
   ./include/utility.chrono.h
+  ./include/utility.print.h
   ./include/utility.random.h
+  ./include/utility.string_view.h
+  ./include/utility.strings.h
 
   ./src/entity.cicd.cpp
   ./src/theapp.my_request.cpp
   ./src/utility.chrono.cpp
+  ./src/utility.print.cpp
   ./src/utility.random.cpp
+  ./src/utility.string_view.cpp
 )
 
 if (NOT WIN32)
