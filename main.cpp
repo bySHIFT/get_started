@@ -3,21 +3,14 @@
 
 #include <cstdlib>
 #include <iostream>
-#include <sstream>
 #include <string>
 
 void print_banner() {
-  std::stringstream ss;
-  ss << std::string(60, '=') << std::endl
-    << "== "
-      "放胆开怀, 尽情肆意"
-    << std::endl << std::endl;
+  using namespace zh::utility::print;
 
-    // std::cout << ss.str();
-    zh::utility::print::print2(
-      zh::utility::print::color::green
-      , ss.str()
-    );
+  print2(color::green, std::string(60, '='), '\n');
+  print2(color::magenta, "== ");
+  print2(color::red, "放胆开怀, 尽情肆意\n");
 }
 
 int main() noexcept try {

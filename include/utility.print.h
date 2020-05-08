@@ -12,6 +12,10 @@ namespace print
     red = 4
     , green = 2
     , blue = 1
+
+    , yellow = (red | green)
+    , magenta = (blue | red)
+    , cyan = (green | blue)
   };
 
   namespace details
