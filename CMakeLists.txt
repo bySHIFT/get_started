@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
 project(making LANGUAGES CXX)
 
 # 配置 include 路径
-include_directories(./)
+include_directories(./include)
 
 # 配置资源文件列表
 list(APPEND _source
