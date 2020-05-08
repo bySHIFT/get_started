@@ -2,6 +2,7 @@
 
 #include "include/entity.cicd.h"
 #include "include/task.hxx"
+#include "include/utility.print.h"
 
 #include <cstdlib>
 #include <iostream>
@@ -25,9 +26,12 @@ int run_my_request()
     .run(once_cicd);
 
   const auto steps = result.get_steps();
-  std::cout << std::endl
-    << ">> STATUS: " << (steps == cicd::status::ALL ? "DONE" : "ERROR")
-    << std::endl << std::endl;
+  zh::utility::print::print2("\n>> STATUS: ");
+  if (steps == cicd::status::ALL) {
+    zh::utility::print::print2(zh::utility::print::color::green, "DONE\n\n");
+  } else {
+    zh::utility::print::print2(zh::utility::print::color::red, "ERROR\n\n");
+  }
 
   return (steps == cicd::status::ALL ? EXIT_SUCCESS : EXIT_FAILURE);
 }
