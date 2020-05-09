@@ -1,12 +1,7 @@
 #pragma once
-#include "utility.string_view.h"
-
 #include <string>
 
-namespace zh
-{
-namespace utility
-{
+namespace zh { namespace utility {
 namespace details
 {
   template<class T>
@@ -36,11 +31,13 @@ namespace details
   std::string format_internal(const char* fmtstr, ...);
 
   inline void append_internal(std::string& into, char c) { into += c; }
+
   template<class T, class = decltype(std::to_string(std::declval<T>()))>
   inline void append_internal(std::string& into, T x)
   {
       into += std::to_string(x);
   }
+
   inline void append_internal(std::string& into, const char* v)
   { into.append(v); }
   inline void append_internal(std::string& into, const std::string& s)
@@ -92,13 +89,13 @@ namespace strings
     return strings::concat(args...);
   }
 
-  template<typename T
-    , class = std::enable_if_t<std::is_convertible<T
-      , zh::utility::string_view>::value>>
-  zh::utility::string_view concat_or_view(const T& v)
-  {
-    return v;
-  }
+  // template<typename T
+  //   , class = std::enable_if_t<std::is_convertible<T
+  //     , zh::utility::string_view>::value>>
+  // zh::utility::string_view concat_or_view(const T& v)
+  // {
+  //   return v;
+  // }
 
 } // end namespace strings
 } // end namespace utility

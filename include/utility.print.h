@@ -20,10 +20,8 @@ namespace print
 
   namespace details
   {
-    using zh::utility::string_view;
-
-    void print(string_view message);
-    void print(const color c, string_view message);
+    void print(const std::string& message);
+    void print(const color c, const std::string& message);
   } // end namespace details
 
   template<typename... Args>

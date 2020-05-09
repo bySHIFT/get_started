@@ -52,11 +52,11 @@ private:
 namespace zh { namespace utility { namespace print {
 namespace details
 {
-  void print(zh::utility::string_view message) {
+  void print(const std::string& message) {
     fwrite(message.data(), 1, message.size(), stdout);
   }
 
-  void print(const color c, zh::utility::string_view message)
+  void print(const color c, const std::string& message)
   {
 #if defined(_WIN32)
     // Note: This static initializer instance will be constructed only once.
@@ -72,7 +72,7 @@ namespace details
     zh::utility::print::print2(message);
     gConsoleService.text.restore_console_text();
 #else
-    auto _fn_get_color_message = [](const zh::utility::string_view& message
+    auto _fn_get_color_message = [](const std::string& message
       , const char* foreground) {
       return zh::utility::strings::concat_or_view(foreground, message, "\e[0m");
     };
@@ -101,7 +101,7 @@ namespace details
       break;
 
       default:
-        message_with_color = message.to_string();
+        message_with_color = message;
       break;
     }
 
