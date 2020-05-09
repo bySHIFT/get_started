@@ -17,4 +17,4 @@
 ```
 
 ## 运行
-![运行](asset/screenshot_1.png)
+![RUN](./asset/screenshot_1.png)
