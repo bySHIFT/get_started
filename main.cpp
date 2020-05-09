@@ -1,4 +1,5 @@
 #include "theapp.my_request.h"
+#include "utility.chrono.h"
 #include "utility.print.h"
 
 #if defined(_WIN32)
@@ -10,11 +11,13 @@
 #include <string>
 
 void print_banner() {
-  using namespace zh::utility::print;
+  using namespace zh::utility;
 
-  print2(color::green, std::string(60, '='), '\n');
-  print2(color::magenta, "== ");
-  print2(color::red, "放胆开怀, 尽情肆意\n");
+  print::print2(print::color::green, std::string(60, '='), '\n');
+  print::print2(print::color::magenta, "== ");
+  print::print2(print::color::red, "放胆开怀, 尽情肆意\n");
+  print::print2(print::color::magenta, "== ");
+  print::print2(print::color::cyan, chrono::now("%F %T %z"), '\n');
 }
 
 int main() noexcept try {

@@ -7,6 +7,8 @@
 #include <string>
 
 #if defined(_WIN32)
+// https://docs.microsoft.com/en-us/windows/console/using-the-high-level-input-and-output-functions
+// SetConsoleTextAttribute
 class console_text final
 {
 public:
@@ -25,12 +27,14 @@ public:
     if (!*this)
       return;
 
+    // Save the current text colors. 
     CONSOLE_SCREEN_BUFFER_INFO console_screen_buffer_info{};
     GetConsoleScreenBufferInfo(m_hStdOutput, &console_screen_buffer_info);
     m_wOriginalColor = console_screen_buffer_info.wAttributes;
 
+    // Set the text attributes to draw color text on black background. 
     SetConsoleTextAttribute(m_hStdOutput
-      , static_cast<WORD>(c) | (m_wOriginalColor & 0xF0));
+      , static_cast<WORD>(c) | FOREGROUND_INTENSITY);
   } catch (...) {
   }
 
@@ -38,6 +42,7 @@ public:
     if (!*this)
       return;
 
+    // Restore the original text colors.
     SetConsoleTextAttribute(m_hStdOutput, m_wOriginalColor);
   } catch (...) {
   }
@@ -50,9 +55,8 @@ private:
 #endif
 
 namespace zh { namespace utility { namespace print {
-namespace details
-{
-  void print(const std::string& message) {
+  void print(const std::string& message)
+  {
     fwrite(message.data(), 1, message.size(), stdout);
   }
 
@@ -108,8 +112,6 @@ namespace details
     zh::utility::print::print2(message_with_color);
 #endif
   }
-
-} // end namespace details
 } // end namespace print
 } // end namespace utility
 } // end namespace zh

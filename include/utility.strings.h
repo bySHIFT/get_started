@@ -19,7 +19,6 @@ namespace details
   }
 
   inline const char* to_printf_arg(const std::string& s) { return s.c_str(); }
-
   inline const char* to_printf_arg(const char* s) { return s; }
 
   template<class T, class = std::enable_if_t<std::is_arithmetic<T>::value>>
@@ -30,14 +29,13 @@ namespace details
 
   std::string format_internal(const char* fmtstr, ...);
 
-  inline void append_internal(std::string& into, char c) { into += c; }
-
   template<class T, class = decltype(std::to_string(std::declval<T>()))>
   inline void append_internal(std::string& into, T x)
   {
       into += std::to_string(x);
   }
 
+  inline void append_internal(std::string& into, char c) { into += c; }
   inline void append_internal(std::string& into, const char* v)
   { into.append(v); }
   inline void append_internal(std::string& into, const std::string& s)
@@ -76,7 +74,7 @@ namespace strings
   }
 
   template<typename... Args>
-  [[nodiscard]] std::string concat(const Args&... args)
+  std::string concat(const Args&... args)
   {
     std::string ret;
     append(ret, args...);
@@ -89,14 +87,12 @@ namespace strings
     return strings::concat(args...);
   }
 
-  // template<typename T
-  //   , class = std::enable_if_t<std::is_convertible<T
-  //     , zh::utility::string_view>::value>>
-  // zh::utility::string_view concat_or_view(const T& v)
-  // {
-  //   return v;
-  // }
-
+  template<class... Args>
+  std::string format(const char* fmtstr, const Args&... args)
+  {
+    using zh::utility::details::to_printf_arg;
+    return details::format_internal(fmtstr, to_printf_arg(to_printf_arg(args))...);
+  }
 } // end namespace strings
 } // end namespace utility
 } // end namespace zh

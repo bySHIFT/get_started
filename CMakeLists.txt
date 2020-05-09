@@ -22,6 +22,7 @@ list(APPEND _source
   ./src/utility.chrono.cpp
   ./src/utility.print.cpp
   ./src/utility.random.cpp
+  ./src/utility.strings.cpp
 )
 
 if (NOT WIN32)
