@@ -1,10 +1,7 @@
 ﻿#pragma once
 #include <string>
 
-namespace zh
-{
-namespace utility
-{
+namespace zh { namespace utility {
 namespace chrono
 {
 // 2020-05-07 18:21:30 610075 +0800

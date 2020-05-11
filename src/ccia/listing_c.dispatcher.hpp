@@ -1,5 +1,6 @@
 #pragma once
 #include "listing_c.queue.hpp"
+#include "listing_c.template_dispatcher.hpp"
 
 namespace messaging
 {

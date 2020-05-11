@@ -30,6 +30,19 @@ list(APPEND _source_cicd
   ./src/cicd/main.cpp
 )
 
+list(APPEND _source_ccia
+  ./src/ccia/listing_c.atm.hpp
+  ./src/ccia/listing_c.bank_machine.hpp
+  ./src/ccia/listing_c.dispatcher.hpp
+  ./src/ccia/listing_c.entity.hpp
+  ./src/ccia/listing_c.interface_machine.hpp
+  ./src/ccia/listing_c.queue.hpp
+  ./src/ccia/listing_c.receiver.hpp
+  ./src/ccia/listing_c.sender.hpp
+  ./src/ccia/listing_c.template_dispatcher.hpp
+  ./src/ccia/main.cpp
+)
+
 # 构建工具库
 add_library(mutility
   STATIC
@@ -44,6 +57,7 @@ if (NOT WIN32)
 endif (NOT WIN32)
 
 add_executable(making ${_source_cicd})
+add_executable(ccia ${_source_ccia})
 
 # 追加库链接可执行文件
 target_link_libraries(making

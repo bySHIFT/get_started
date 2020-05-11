@@ -2,8 +2,7 @@
 #include <functional>
 #include <type_traits>
 
-namespace zh
-{
+namespace zh { namespace utility {
 template<typename T>
 class task;
 
@@ -39,5 +38,6 @@ public:
 private:
   TaskFunctionTypes m_fnTask;
 };
+} // end namespace utility
 } // end namespace zh
 

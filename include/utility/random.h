@@ -1,10 +1,7 @@
 #pragma once
 #include <string>
 
-namespace zh
-{
-namespace utility
-{
+namespace zh { namespace utility {
 namespace random
 {
 int get_uniform_distribution(int min = 0, int max = 0X0F);

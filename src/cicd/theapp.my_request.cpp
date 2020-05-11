@@ -7,11 +7,12 @@
 #include <cstdlib>
 #include <iostream>
 
-namespace zh
-{
+namespace zh { 
 
 int run_my_request()
 {
+  using namespace zh::utility;
+
   cicd once_cicd("ce42bf7a");
   task<cicd&(cicd&)> my_cicd{
     [](cicd& once_cicd) -> cicd& { return once_cicd; }

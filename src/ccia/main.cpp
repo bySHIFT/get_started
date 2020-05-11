@@ -2,6 +2,9 @@
 #include "listing_c.bank_machine.hpp"
 #include "listing_c.interface_machine.hpp"
 
+#include <cstdlib>
+#include <thread>
+
 int main()
 {
   bank_machine bank;
@@ -52,5 +55,5 @@ int main()
   bank_thread.join();
   if_thread.join();
 
-  return 0;
+  return EXIT_SUCCESS;
 }
