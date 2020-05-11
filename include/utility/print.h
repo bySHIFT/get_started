@@ -27,6 +27,8 @@ namespace print
   void print2(const Args&... args) {
     print(zh::utility::strings::concat_or_view(args...));
   }
+
+  void print_banner();
 } // end namespace print
 } // end namespace utility
 } // end namespace zh

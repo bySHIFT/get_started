@@ -1,4 +1,7 @@
 #include "utility/print.h"
+
+#include "utility/chrono.h"
+
 #if defined(_WIN32)
   #include <windows.h>
 #endif
@@ -111,6 +114,15 @@ namespace zh { namespace utility { namespace print {
 
     zh::utility::print::print2(message_with_color);
 #endif
+  }
+
+  void print_banner()
+  {
+    print::print2(print::color::green, std::string(60, '='), '\n');
+    print::print2(print::color::magenta, "== ");
+    print::print2(print::color::red, "放胆开怀, 尽情肆意\n");
+    print::print2(print::color::magenta, "== ");
+    print::print2(print::color::cyan, chrono::now("%F %T %z"), '\n');
   }
 } // end namespace print
 } // end namespace utility
