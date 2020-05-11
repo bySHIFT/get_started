@@ -9,24 +9,25 @@ include_directories(./include)
 
 # 配置资源文件列表
 list(APPEND _source_utility
-  ./include/task.hxx
-  ./include/utility.chrono.h
-  ./include/utility.print.h
-  ./include/utility.random.h
-  ./include/utility.strings.h
+  ./include/utility/chrono.h
+  ./include/utility/print.h
+  ./include/utility/random.h
+  ./include/utility/strings.h
+  ./include/utility/task.hxx
 
-  ./src/utility.chrono.cpp
-  ./src/utility.print.cpp
-  ./src/utility.random.cpp
-  ./src/utility.strings.cpp
+  ./src/utility/chrono.cpp
+  ./src/utility/print.cpp
+  ./src/utility/random.cpp
+  ./src/utility/strings.cpp
 )
 
-list(APPEND _source
-  ./include/entity.cicd.h
-  ./include/theapp.my_request.h
+list(APPEND _source_cicd
+  ./include/cicd/entity.cicd.h
+  ./include/cicd/theapp.my_request.h
 
-  ./src/entity.cicd.cpp
-  ./src/theapp.my_request.cpp
+  ./src/cicd/entity.cicd.cpp
+  ./src/cicd/theapp.my_request.cpp
+  ./src/cicd/main.cpp
 )
 
 # 构建工具库
@@ -42,7 +43,7 @@ if (NOT WIN32)
   message(STATUS "C++ compiler flags: ${CMAKE_CXX_FLAGS}")
 endif (NOT WIN32)
 
-add_executable(making main.cpp ${_source})
+add_executable(making ${_source_cicd})
 
 # 追加库链接可执行文件
 target_link_libraries(making

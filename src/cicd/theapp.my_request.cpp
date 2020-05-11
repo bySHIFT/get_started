@@ -1,8 +1,8 @@
-#include "theapp.my_request.h"
+#include "cicd/theapp.my_request.h"
+#include "cicd/entity.cicd.h"
 
-#include "entity.cicd.h"
-#include "task.hxx"
-#include "utility.print.h"
+#include "utility/print.h"
+#include "utility/task.hxx"
 
 #include <cstdlib>
 #include <iostream>
