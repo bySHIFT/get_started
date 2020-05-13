@@ -16,4 +16,4 @@ jobs:
       run: |
         TZ='Asia/Shanghai'; export TZ
         date +'%F %T %::z'
-        ./build/making
+        ./build/src/cicd/cicd
