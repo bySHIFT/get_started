@@ -28,8 +28,6 @@
   tag: 258A411E-C91C-F4F4-4B0C-ADAA3C5DE11C
   START: 2020-05-13 14:42:42 882656 +0800
 
-  START: 2020-05-13 14:42:42 882656 +0800
-
 ...
 >> commit sha1: ce42bf7a
   job name: build
