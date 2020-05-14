@@ -1,8 +1,8 @@
+# 配置 cmake 最小版本
+cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
+
 # 配置构建工程及语言
 project(utility LANGUAGES CXX)
-
-# 配置 include 路径
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../include)
 
 # 配置资源文件列表
 list(APPEND _source_utility
@@ -16,4 +16,9 @@ list(APPEND _source_utility
 add_library(${PROJECT_NAME}
   STATIC
     ${_source_utility}
+)
+
+target_include_directories(${PROJECT_NAME}
+  PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../include
 )
