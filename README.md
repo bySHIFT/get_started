@@ -61,3 +61,91 @@
 
 >> EXIT: 0
 ```
+
+```cpp
+#include <iomanip>
+#include <iostream>
+#include <random>
+#include <vector>
+
+namespace commands {
+enum {
+    next_age = 5
+
+    , max_red = 33
+    , count_red = 6
+
+    , max_blue = 16
+};
+
+uint8_t random(uint8_t max) {
+    std::random_device rd{};
+    std::mt19937 gen{ rd() };
+    std::uniform_int_distribution<> dis{ 0, max - 1 };
+
+    return dis(gen);
+}
+
+void fill(std::vector<uint8_t>& table, uint8_t count) {
+    table.reserve(count);
+    for (uint8_t idx{ 0 }; idx < count; ++idx) {
+        table.push_back(idx + 1);
+    }
+
+    std::random_device rd{};
+    std::mt19937 gen{ rd() };
+    std::shuffle(table.begin(), table.end(), gen);
+}
+
+uint8_t get(std::vector<uint8_t>& table) {
+    const auto idx = random((uint8_t)table.size());
+    const auto rst = table[idx];
+
+    table[idx] = table.back();
+    table.pop_back();
+
+    return rst;
+}
+
+std::vector<uint8_t> bingo() {
+    std::vector<uint8_t> red_table{};
+    std::vector<uint8_t> blue_table{};
+    fill(red_table, max_red);
+    fill(blue_table, max_blue);
+
+    std::vector<uint8_t> ONE(count_red );
+    for (uint8_t idx{ 0 }; idx < count_red; ++idx) {
+        ONE[idx] = get(red_table);
+    }
+
+    std::sort(ONE.begin(), ONE.end());
+    ONE.emplace_back(get(blue_table));
+
+    return ONE;
+}
+} // end commands namespace
+
+int main() try {
+    for (uint8_t idx{ 0 }; idx < commands::next_age; ++idx) {
+        auto ONES = commands::bingo();
+        const int BLUE = ONES.back();
+        ONES.pop_back();
+
+        std::cout << "("
+            << std::setw(2) << std::setfill('0') << (int)(idx + 1)
+            << ")";
+
+        for (const auto& item : ONES)
+            std::cout << " "
+            << std::setw(2) << std::setfill('0') << (int)item;
+
+        std::cout << ", "
+            << std::setw(2) << std::setfill('0') << BLUE << std::endl;
+    }
+
+    // system("pause");
+    return EXIT_SUCCESS;
+} catch (...) {
+    return EXIT_FAILURE;
+}
+```
