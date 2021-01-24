@@ -63,89 +63,103 @@
 ```
 
 ```cpp
+#include <algorithm>
 #include <iomanip>
 #include <iostream>
 #include <random>
+#include <tuple>
 #include <vector>
 
 namespace commands {
+using type_table = std::vector<uint8_t>;
 enum {
-    next_age = 5
+  NEXT_AGE = 10
 
-    , max_red = 33
-    , count_red = 6
+  , MAX_RED = 33
+  , COUNT_RED = 6
 
-    , max_blue = 16
+  , MAX_BLUE = 16
 };
 
 uint8_t random(uint8_t max) {
-    std::random_device rd{};
-    std::mt19937 gen{ rd() };
-    std::uniform_int_distribution<> dis{ 0, max - 1 };
+  std::random_device rd{};
+  std::mt19937 gen{ rd() };
+  std::uniform_int_distribution<> dis{ 0, max - 1 };
 
-    return dis(gen);
+  return dis(gen);
 }
 
-void fill(std::vector<uint8_t>& table, uint8_t count) {
-    table.reserve(count);
-    for (uint8_t idx{ 0 }; idx < count; ++idx) {
-        table.push_back(idx + 1);
-    }
+void fill(type_table& table, uint8_t count) {
+  table.reserve(count);
+  for (uint8_t idx{ 0 }; idx < count; ++idx) {
+    table.push_back(idx + 1);
+  }
 
-    std::random_device rd{};
-    std::mt19937 gen{ rd() };
-    std::shuffle(table.begin(), table.end(), gen);
+  std::random_device rd{};
+  std::mt19937 gen{ rd() };
+  std::shuffle(table.begin(), table.end(), gen);
 }
 
-uint8_t get(std::vector<uint8_t>& table) {
-    const auto idx = random((uint8_t)table.size());
-    const auto rst = table[idx];
+uint8_t get(type_table& table) {
+  const auto idx = random((uint8_t)table.size());
+  const auto rst = table[idx];
 
-    table[idx] = table.back();
-    table.pop_back();
+  table[idx] = table.back();
+  table.pop_back();
 
-    return rst;
+  return rst;
 }
 
 std::vector<uint8_t> bingo() {
-    std::vector<uint8_t> red_table{};
-    std::vector<uint8_t> blue_table{};
-    fill(red_table, max_red);
-    fill(blue_table, max_blue);
+  type_table red_table{};
+  type_table blue_table{};
+  fill(red_table, MAX_RED);
+  fill(blue_table, MAX_BLUE);
 
-    std::vector<uint8_t> ONE(count_red );
-    for (uint8_t idx{ 0 }; idx < count_red; ++idx) {
-        ONE[idx] = get(red_table);
-    }
+  type_table ONE(COUNT_RED);
+  for (uint8_t idx{ 0 }; idx < COUNT_RED; ++idx) {
+    ONE[idx] = get(red_table);
+  }
 
-    std::sort(ONE.begin(), ONE.end());
-    ONE.emplace_back(get(blue_table));
+  std::sort(ONE.begin(), ONE.end());
+  ONE.emplace_back(get(blue_table));
 
-    return ONE;
+  return ONE;
 }
 } // end commands namespace
 
 int main() try {
-    for (uint8_t idx{ 0 }; idx < commands::next_age; ++idx) {
-        auto ONES = commands::bingo();
-        const int BLUE = ONES.back();
-        ONES.pop_back();
+  std::vector<commands::type_table> ONES(commands::NEXT_AGE);
+  const auto count_ONES = ONES.size();
+  for (uint8_t idx{ 0 }; idx < count_ONES; ++idx)
+    ONES[idx] = commands::bingo();
 
-        std::cout << "("
-            << std::setw(2) << std::setfill('0') << (int)(idx + 1)
-            << ")";
+  std::sort(ONES.begin(), ONES.end()
+    , [](const commands::type_table& lhs, const commands::type_table& rhs) {
+      return (std::tie(lhs[0], lhs[1], lhs[2], lhs[3], lhs[4], lhs[5])
+        < std::tie(rhs[0], rhs[1], rhs[2], rhs[3], rhs[4], rhs[5]));
+    });
 
-        for (const auto& item : ONES)
-            std::cout << " "
-            << std::setw(2) << std::setfill('0') << (int)item;
+  for (uint8_t idx{ 0 }; idx < count_ONES; ++idx) {
+    auto ONE = ONES[idx];
+    const int BLUE = ONE.back();
+    ONE.pop_back();
 
-        std::cout << ", "
-            << std::setw(2) << std::setfill('0') << BLUE << std::endl;
-    }
+    std::cout << "("
+      << std::setw(2) << std::setfill('0') << (int)(idx + 1)
+      << ")";
 
-    // system("pause");
-    return EXIT_SUCCESS;
+    for (const auto& item : ONE)
+      std::cout << " "
+      << std::setw(2) << std::setfill('0') << (int)item;
+
+    std::cout << ", "
+      << std::setw(2) << std::setfill('0') << BLUE << std::endl;
+  }
+
+  return EXIT_SUCCESS;
 } catch (...) {
-    return EXIT_FAILURE;
+  return EXIT_FAILURE;
 }
+
 ```
