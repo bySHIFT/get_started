@@ -110,7 +110,7 @@ uint8_t get(type_table& table) {
   return rst;
 }
 
-std::vector<uint8_t> bingo() {
+type_table bingo() {
   type_table red_table{};
   type_table blue_table{};
   fill(red_table, MAX_RED);
