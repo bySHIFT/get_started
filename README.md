@@ -73,7 +73,7 @@
 namespace commands {
 using type_table = std::vector<uint8_t>;
 enum {
-  NEXT_AGE = 10
+  NEXT_AGE = 5
 
   , MAX_RED = 33
   , COUNT_RED = 6
@@ -91,9 +91,8 @@ uint8_t random(uint8_t max) {
 
 void fill(type_table& table, uint8_t count) {
   table.reserve(count);
-  for (uint8_t idx{ 0 }; idx < count; ++idx) {
+  for (uint8_t idx{ 0 }; idx < count; ++idx)
     table.push_back(idx + 1);
-  }
 
   std::random_device rd{};
   std::mt19937 gen{ rd() };
@@ -117,9 +116,8 @@ type_table bingo() {
   fill(blue_table, MAX_BLUE);
 
   type_table ONE(COUNT_RED);
-  for (uint8_t idx{ 0 }; idx < COUNT_RED; ++idx) {
+  for (uint8_t idx{ 0 }; idx < COUNT_RED; ++idx)
     ONE[idx] = get(red_table);
-  }
 
   std::sort(ONE.begin(), ONE.end());
   ONE.emplace_back(get(blue_table));
@@ -157,9 +155,16 @@ int main() try {
       << std::setw(2) << std::setfill('0') << BLUE << std::endl;
   }
 
+  std::cout << std::endl << std::string(40, '=') << std::endl;
+  std::cout << "a3362";
+  for (const auto& ONE : ONES) {
+    std::cout << "#";
+    for (const auto& ball : ONE)
+      std::cout << std::setw(2) << std::setfill('0') << (int)ball;
+  }
+
   return EXIT_SUCCESS;
 } catch (...) {
   return EXIT_FAILURE;
 }
-
 ```
