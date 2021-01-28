@@ -5,5 +5,6 @@ cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
 project(making LANGUAGES CXX)
 
 add_subdirectory(./src/utility)
-add_subdirectory(./src/ccia)
+# add_subdirectory(./src/ccia)
 add_subdirectory(./src/cicd)
+add_subdirectory(./src/bingo)

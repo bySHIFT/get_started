@@ -16,4 +16,5 @@ jobs:
       run: |
         TZ='Asia/Shanghai'; export TZ
         date +'%F %T %::z'
+        ./build/src/bingo/bingo
         ./build/src/cicd/cicd
