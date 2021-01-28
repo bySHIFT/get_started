@@ -108,6 +108,8 @@ int main() try {
       std::cout << std::setw(2) << std::setfill('0') << (int)ball;
   }
 
+  std::cout << std::endl;
+
   return EXIT_SUCCESS;
 } catch (...) {
   return EXIT_FAILURE;
