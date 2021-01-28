@@ -20,7 +20,9 @@ enum {
 
 uint8_t random(uint8_t max) {
   std::random_device rd{};
-  std::mt19937 gen{ rd() };
+
+  std::seed_seq seed2{ rd(), rd(), rd(), rd(), rd(), rd(), rd(), rd() };
+  std::mt19937 gen{ seed2 };
   std::uniform_int_distribution<> dis{ 0, max - 1 };
 
   return dis(gen);
@@ -37,7 +39,7 @@ void fill(type_table& table, uint8_t count) {
   std::shuffle(table.begin(), table.end(), gen);
 }
 
-uint8_t get(type_table& table) {
+uint8_t pop(type_table& table) {
   const auto idx = random((uint8_t)table.size());
   const auto rst = table[idx];
 
@@ -56,10 +58,10 @@ type_table bingo() {
   type_table ONE;
   std::generate_n(std::back_inserter(ONE)
     , COUNT_RED
-    , [&red_table] {return get(red_table); });
+    , [&red_table] {return pop(red_table); });
 
   std::sort(ONE.begin(), ONE.end());
-  ONE.emplace_back(get(blue_table));
+  ONE.emplace_back(pop(blue_table));
 
   return ONE;
 }
