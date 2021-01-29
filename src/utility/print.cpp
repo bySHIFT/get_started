@@ -118,7 +118,7 @@ namespace zh { namespace utility { namespace print {
 
   void print_banner()
   {
-    print::print2(print::color::green, std::string(60, '='), '\n');
+    print::print2(print::color::green, std::string(42, '='), '\n');
     print::print2(print::color::magenta, "== ");
     print::print2(print::color::red, "放胆开怀, 尽情肆意\n");
     print::print2(print::color::magenta, "== ");
