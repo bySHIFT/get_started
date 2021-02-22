@@ -1,5 +1,6 @@
 ﻿#include <atomic>
 #include <cstdlib>
+#include <cstring>
 #include <ctime>
 #include <iomanip>
 #include <iostream>
@@ -56,9 +57,10 @@ private:
 
 class four_operations {
 public:
-  four_operations(type_operation first, type_operation second)
+  four_operations(type_operation first, type_operation second, int limit)
     : ot_first(first)
-    , ot_second(second) {
+    , ot_second(second)
+    , operation_limit(limit) {
   }
 
   void get_lazy() const {
@@ -127,8 +129,7 @@ private:
   }
 
   void calc() const {
-    enum { MIN = 1
-      , MAX = 99
+    enum { __MAX = 99
     
       , ADD_SUB = 0
       , MUL_DIV = 1
@@ -140,7 +141,11 @@ private:
     const auto OP1 = (int)ot_first & 0X02;
     const auto OP2 = (int)ot_second & 0X02;
 
-    random r{ MIN, MAX };
+    uint8_t MAX = __MAX;
+    if (operation_limit >= 20 && operation_limit <= 100)
+      MAX = operation_limit - 1;
+
+    random r{ 1, MAX };
     while (true) {
       operation_first = r.next();
       operation_second = r.next();
@@ -173,6 +178,7 @@ private:
 
   const type_operation ot_first;
   const type_operation ot_second;
+  const int operation_limit;
 
   mutable int operation_first{ 0 };
   mutable int operation_second{ 0 };
@@ -201,39 +207,116 @@ std::string get_date() {
   return { date_string };
 }
 
-std::string get_four_operations() {
+// OPERATION: [1: 加减, 2: 加减乘, 3: 加减乘除]
+// LIMIT: [20, 100]
+std::string get_four_operations(int OPERATION, int LIMIT) {
+  auto tempMax = (uint8_t)arithmetic::type_operation::to_substract;
+  if (2 == OPERATION)
+    tempMax = (uint8_t)arithmetic::type_operation::to_multiply;
+  else if (3 == OPERATION)
+    tempMax = (uint8_t)arithmetic::type_operation::to_divide;
+
   const auto min = (uint8_t)arithmetic::type_operation::to_add;
-  const auto max = (uint8_t)arithmetic::type_operation::to_substract;
+  const auto max = tempMax;
   const arithmetic::random r{ min, max };
 
   return arithmetic::four_operations{
     (arithmetic::type_operation)r.next()
-    , (arithmetic::type_operation)r.next() }
-  .to_string();
+    , (arithmetic::type_operation)r.next()
+    , LIMIT
+    }.to_string();
 }
 } // end commands namespace
 
+void print_usage() noexcept {
+  std::cout << R"(
+用法: ShiAN.exe [-name:<这里输入学生的信息>] [-count:<题目输出总数>] [-operation:<操作类型>] [-limit:<最大操作数>]
+  -name: 学生信息, 如: 浦江一小 一(1)班 张芮安;
+  -count: 输出题目的总数, 输入范围[10, 200];
+  -operation: 四则运算的操作符, 输入范围[1, 3], 其中1: 加减, 2: 加减乘, 3: 加减乘除;
+  -limit: 四则运算的操作数的最大值, 输入范围[20, 100];
+  -help: 输出本条信息, 并退出;
 
-void print_title() noexcept {
-  std::cout << "日期: " << commands::get_date()
-    << "    " << "浦江一小 一(1) 张芮安" << std::endl;
+例: ShiAN.exe -name:"浦江一小 一(1)班 张芮安" -count:"20" -operation:"1" -limit:"30"
+)"
+    << std::endl;
 }
 
+void print_title(const char* name) noexcept {
+  enum { SIZE = 40 };
+  std::string label(SIZE, '_');
+  if (name) {
+    label = name;
+    if (label.size() > SIZE)
+      label = label.substr(0, SIZE);
+  }
+
+  std::cout << "日期: " << commands::get_date()
+    << "    " << label << std::endl;
+}
+
+const char*
+get_value(int argc, char* argv[], const char* name) {
+  const size_t nameLen = std::strlen(name);
+  for (int i = 0; i < argc; i++) {
+    if (std::strncmp(argv[i] + 1, name, nameLen) == 0) {
+      return argv[i] + 1 + nameLen + 1;
+    }
+  }
+  return nullptr;
+}
 } // end internal namespace
 
-int main()
+int main(int argc, char **argv)
 {
   enum {
     BANNER_SIZE = 80
     , ROW_SIZE = 2
     , SEPERATOR_SIZE = 10
     , PREFIX_SIZE = 2
-    , TOTAL = 30
+    , __TOTAL = 30
+    , __OPERATION = 1 // 1: 加减, 2: 加减乘, 3: 加减乘除
+    , __LIMIT = 100
   };
+
+  if (internal::get_value(argc, argv, "help") || internal::get_value(argc, argv, "?")) {
+    internal::print_usage();
+    exit(EXIT_FAILURE);
+  }
+
+  // -name:"浦江一小 一(1)班 张芮安" -count:"20" -operation:"1" -limit:"100"
+  { // -name:"浦江一小 一(1)班 张芮安"
+    auto argName = internal::get_value(argc, argv, "name");
+    internal::print_title(argName);
+    std::cout << std::string(BANNER_SIZE, '=') << std::endl << std::endl;
+  }
+
+  int TOTAL = __TOTAL;
+  if (auto argCount = internal::get_value(argc, argv, "count")) {
+    const auto c = std::atoi(argCount);
+    if (c >= 10 && c <= 200)
+      TOTAL = c;
+  }
+
+  int OPERATION = __OPERATION;
+  if (auto argOperation = internal::get_value(argc, argv, "operation")) {
+    const auto opt = std::atoi(argOperation);
+    if (opt >= 1 && opt <= 3)
+      OPERATION = opt;
+  }
+
+  int LIMIT = __LIMIT;
+  if (auto argLimit = internal::get_value(argc, argv, "limit")) {
+    const auto opt = std::atoi(argLimit);
+    if (opt >= 20 && opt <= 100)
+      LIMIT = opt;
+  }
 
   const auto SEQ_SIZE = std::to_string(TOTAL).length();
   int SEQ_currentNO = 0;
-  auto print([SEQ_SIZE, &SEQ_currentNO](int size) mutable {
+  auto print([OPERATION
+    , LIMIT
+    , SEQ_SIZE, &SEQ_currentNO](int size) mutable {
     auto fold([](std::string a, const std::string& b) {
       return std::move(a) + std::string(SEPERATOR_SIZE, ' ') + b;
     });
@@ -249,7 +332,8 @@ int main()
         << std::to_string(++SEQ_currentNO)
         << ")";
 
-      ROW[idx] = ssSequenceNo.str() + internal::commands::get_four_operations();
+      ROW[idx] = ssSequenceNo.str()
+        + internal::commands::get_four_operations(OPERATION, LIMIT);
     }
 
     std::string s = std::accumulate(std::next(ROW.begin())
@@ -259,10 +343,6 @@ int main()
     std::cout << std::string(PREFIX_SIZE, ' ') << s << std::endl << std::endl;
   });
 
-  internal::print_title();
-  std::cout << std::string(BANNER_SIZE, '=') << std::endl << std::endl;
-
-  
   const auto INFO = std::div(TOTAL, ROW_SIZE);
   for (int idx = 0; idx < INFO.quot; ++idx)
     print(ROW_SIZE);
