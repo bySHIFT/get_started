@@ -12,9 +12,14 @@ jobs:
     - name: 构建
       run: cmake -H. -Bbuild && cmake --build ./build
 
-    - name: 运行
+    - name: 运行BINGO
       run: |
         TZ='Asia/Shanghai'; export TZ
         date +'%F %T %::z'
         # ./build/src/cicd/cicd
         ./build/src/bingo/bingo
+    - name: 运行ShiAN
+      run: |
+        TZ='Asia/Shanghai'; export TZ
+        date +'%F %T %::z'
+        ./build/src/shian/ShiAN
