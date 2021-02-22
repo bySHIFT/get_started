@@ -1,8 +1,8 @@
-﻿#include <cstdlib>
+﻿#include <atomic>
+#include <cstdlib>
 #include <ctime>
 #include <iomanip>
 #include <iostream>
-#include <mutex>
 #include <numeric>
 #include <random>
 #include <sstream>
@@ -58,12 +58,12 @@ class four_operations {
 public:
   four_operations(type_operation first, type_operation second)
     : ot_first(first)
-    , ot_second(second)
-  {
+    , ot_second(second) {
   }
 
   void get_lazy() const {
-    std::call_once(flag_init, [&] { return calc(); });
+    if (!flag_init.exchange(true))
+      calc();
   }
 
   std::string to_string() const {
@@ -179,7 +179,7 @@ private:
   mutable int operation_third{ 0 };
   mutable int operation_result{ 0 };
 
-  mutable std::once_flag flag_init;
+  mutable std::atomic_bool flag_init{ false };
 };
 } // end arithmetic namespace
 
