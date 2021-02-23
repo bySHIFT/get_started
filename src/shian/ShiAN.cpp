@@ -138,8 +138,8 @@ private:
     // A OP1 B OP2 C = D
     // OP[1, 2]: ＋－ = 0, ×÷ = 1
     // OP1OP2: 00, 01, 10, 11
-    const auto OP1 = (int)ot_first & 0X02;
-    const auto OP2 = (int)ot_second & 0X02;
+    const int OP1 = (int)ot_first & 0X02 ? MUL_DIV : ADD_SUB;
+    const int OP2 = (int)ot_second & 0X02 ? MUL_DIV : ADD_SUB;
 
     uint8_t MAX = __MAX;
     if (operation_limit >= 20 && operation_limit <= 100)
