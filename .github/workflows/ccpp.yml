@@ -22,4 +22,4 @@ jobs:
       run: |
         TZ='Asia/Shanghai'; export TZ
         date +'%F %T %::z'
-        ./build/src/shian/ShiAN -name:"浦江一小 一(1)班 张芮安" -count:"40" -operation:"3" -limit:"20"
+        ./build/src/shian/ShiAN -name:"浦江一小 一(1)班 张芮安" -count:"40" -operation:"3" -limit:"20" -magic:"1"
