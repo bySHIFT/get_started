@@ -246,10 +246,10 @@ void print_usage() noexcept {
     -name: 学生信息, 如: 浦江一小 一(1)班 张芮安;
     -count: 输出题目的总数, 输入范围[10, 200], 默认: 30条;
     -operation: 四则运算的操作符, 输入范围[1, 3],
-            其中1: 加减, 2: 加减乘, 3: 加减乘除, 默认: 1;
+      其中1: 加减, 2: 加减乘, 3: 加减乘除, 默认: 1;
     -limit: 四则运算的操作数的最大值, 输入范围[20, 100], 默认: 20;
     -magic: 3个操作数与算式结果, 随机置空一个, 输入范围[0, 1],
-            其中0: 只取操作数, 1: 4个数随机取一个, 默认: 0;
+      其中0: 只取操作数, 1: 4个数随机取一个, 默认: 0;
 
     -help: 输出本条信息, 并退出;
 
@@ -259,7 +259,13 @@ void print_usage() noexcept {
 }
 
 void print_title(const char* name) noexcept {
-  enum { SIZE = 40 };
+  enum {
+#if _WIN32
+    SIZE = 40
+#else
+    SIZE = 20
+#endif
+    };
   std::string label(SIZE, '_');
   if (name) {
     label = name;
@@ -347,9 +353,14 @@ void print(int SEPERATOR_SIZE
 
 int main(int argc, char **argv)
 {
-  enum {
-    BANNER_SIZE = 80
+  enum { SENTINEL = 0
+#if _WIN32
+    , BANNER_SIZE = 80
     , ROW_SIZE = 2
+#else // github 环境 CI 下, action的显示输出
+    , BANNER_SIZE = 40
+    , ROW_SIZE = 1
+#endif
     , SEPERATOR_SIZE = 10
     , PREFIX_SIZE = 2
 
