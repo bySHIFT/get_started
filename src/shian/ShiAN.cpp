@@ -347,7 +347,11 @@ void print(int SEPERATOR_SIZE
     , ROW.end()
     , ROW.front()
     , fold);
-  std::cout << std::string(PREFIX_SIZE, ' ') << s << std::endl << std::endl;
+  std::cout << std::string(PREFIX_SIZE, ' ') << s << std::endl
+#if _WIN32
+            << std::endl << std::endl
+#endif
+            << std::endl;
 }
 } // end internal namespace
 
